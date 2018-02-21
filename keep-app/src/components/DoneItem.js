@@ -6,7 +6,7 @@ const DoneItem = ({item}) => {
     <li className="collection-item">
         <div className="done muted">
             {item.name}
-            <a className="secondary-content"><i className="material-icons grey-text">shopping_basket</i></a>
+            <a className="secondary-content"><i className="material-icons grey-text">shopping_cart</i></a>
         </div>
     </li>
   )
