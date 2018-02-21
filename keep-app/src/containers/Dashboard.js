@@ -4,27 +4,12 @@ import Header from '../components/Header';
 import {addLabel, loadLists } from '../actions/ListActions';
 import Sidebar from '../components/Sidebar';
 import ListCards from './ListCards';
+import * as selector from '../reducers/ListReducers'
 
 class Dashboard extends Component { 
-    constructor(props){
+    constructor(props, context){
         super(props);
-    }   
-
-    componentWillMount(){
-        const locUser = JSON.parse(localStorage.getItem("user"))
-        if(locUser){
-           if(this.props.lists){
-            console.log("this.props", this.props);
-            this.props.onLoadList(locUser.id);
-           }
-        }else{
-            this.props.history.push('/');
-        }
-    }
-
-    componentDidMount(){
-
-    }
+    } 
 
     render() {
         return (
@@ -49,8 +34,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        labels: [],
-        lists: state.lists
+        lists: selector.getAllList(state)
     };
 };
 const mapDispatchToProps = dispatch => {

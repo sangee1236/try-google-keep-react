@@ -25,3 +25,22 @@
     color:#999;
     text-decoration:line-through;
 }
+
+.list-card .card-content{
+    padding:0 !important;
+}
+
+.list-card .card-title{
+    padding:5px !important;
+    margin-bottom: 0;
+}
+.list-card .collection{
+    height: 300px;
+    overflow-y: auto;
+    margin-top:0px;
+    
+}
+
+.item-add{
+    padding: 0;
+}

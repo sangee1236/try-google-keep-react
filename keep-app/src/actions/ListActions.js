@@ -1,4 +1,9 @@
+import {denormalize, normalize } from 'normalizr';
+import { listSchema, itemSchema } from './schemas';
+
 const baseUrl = 'http://localhost:55543/api';
+
+
 
 export const retriveUser = user => ({
     type: 'RETRIVE_USER',
@@ -93,7 +98,8 @@ export const loadLists = userId => {
         fetch(baseUrl + '/lists/by-user/' + userId)
             .then(response => {
               response.json().then(function(data) {
-                dispatch(retriveLists(data));
+                const normalized = normalize(data, [ listSchema ]);
+                dispatch(retriveLists(normalized));
               });
                 
             })
@@ -103,6 +109,7 @@ export const loadLists = userId => {
 
 
 export const createList = list => {
+    console.log("list",list);
   return (dispatch, getState) => {
       fetch(baseUrl + '/lists', {
           method: 'POST',
@@ -115,7 +122,8 @@ export const createList = list => {
           .then(function(response) {              
 
               response.json().then(function(data) {
-                dispatch(addList(data));
+                const normalized = normalize(data, listSchema);
+                dispatch(addList(normalized));
                 
               });
           })
@@ -124,6 +132,29 @@ export const createList = list => {
           });
   };
 };
+
+export const handleItemUpdatAdd = item => {
+    return (dispatch, getState) => {
+        fetch(baseUrl + '/items', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
+            .then(function(response) {              
+  
+                response.json().then(function(data) { 
+                  const normalized = normalize(data, itemSchema);                
+                  dispatch(addItem(normalized));
+                });
+            })
+            .catch(function(err) {
+                console.log(`error: ${err}`);
+            });
+    };
+  };
 
 
 export const handleItemUpdate = item => {
@@ -147,6 +178,32 @@ export const handleItemUpdate = item => {
           });
   };
 };
+
+
+export const handleListUpdate = list => {
+    delete list.items;
+    delete list.labels;
+    return (dispatch, getState) => {
+        fetch(baseUrl + '/lists/'+ list.id, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(list)
+        })
+            .then(function(response) {              
+  
+                response.json().then(function(data) {                            
+                  dispatch(updateList(data));
+                });
+            })
+            .catch(function(err) {
+                console.log(`error: ${err}`);
+            });
+    };
+  };
+  
 
 
 

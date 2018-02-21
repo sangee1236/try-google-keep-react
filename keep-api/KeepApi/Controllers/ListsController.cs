@@ -34,7 +34,10 @@ namespace KeepApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var list = await _context.Lists.SingleOrDefaultAsync(m => m.Id == id);
+            var list = await _context.Lists
+                .Include(r => r.Items)
+                .Include(r => r.Labels)
+                .SingleOrDefaultAsync(m => m.Id == id);
 
             if (list == null)
             {
@@ -81,6 +84,7 @@ namespace KeepApi.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                return CreatedAtAction("GetList", new { id = list.Id }, list);
             }
             catch (DbUpdateConcurrencyException)
             {

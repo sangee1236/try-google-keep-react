@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Item = ({parentId, item, onUpdateItem}) => {
+const Item = ({parentId, item, onUpdateItem, onDeleteItem}) => {
 
   return (
     <li className="collection-item">
@@ -16,7 +16,11 @@ const Item = ({parentId, item, onUpdateItem}) => {
               item.status = e.target.checked ? 'active':'done';
               onUpdateItem(item)}}/>
             <label htmlFor={item.id}>{item.name}</label>
-            <a href="#!" className="secondary-content"><i className="material-icons">delete</i></a>
+            <a href="#!" className="secondary-content" 
+            onClick={()=>{
+              item.status = 'deleted';
+              onDeleteItem(item);
+            }}><i className="material-icons">delete</i></a>
         </div>
     </li>
   )

@@ -3,57 +3,83 @@ import Item from './Item';
 import DoneItem from './DoneItem';
 import Chip from 'material-ui/Chip';
 
-const ListCard = ({
-    list,
-    onAddLabel,
-    onRemoveLabel,
-    onUpdateList,
-    onAddItem,
-    onUpdateItem,
-    onDeleteItem,
-    editmode
-}) => {
-    const sortedItems = list.items.sort(function(a, b) {
-        var textA = a.status.toUpperCase();
-        var textB = b.status.toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-    });
 
-    const newItem = {
-      id: 0,
-      name: '',
-      qty: 0,
-      price: 0,
-      status: 'active',
-      editmode: true
-    };
+class ListCard extends React.Component {
+    state = {
+        newItem: false
+    }
 
-    let title;
-    if (editmode) {
-        title = (
-            <form
-                id="listTitle"
-                onSubmit={e => {
-                    e.preventDefault();
-                    list.title = this.input.value;
-                    onUpdateList(list);
-                }}
-            >
-                <div className="input-field">
-                    <input
-                        placeholder="Title"
-                        id="listTitle"
-                        type="text"
-                        className="validate"
-                        defaultValue={list.title}
-                        ref={input => (this.input = input)}
-                    />
-                    <label htmlFor="listTitle">Title</label>
-                </div>
-            </form>
-        );
-    } else {
-        title = (
+    handleAddNewItem(){
+        this.setState({newItem: true});
+    }
+
+    hideAddItem(){
+        this.setState({newItem: false});
+    }
+    
+    
+    render(){
+        const {
+            list,
+            items,
+            handleAddNewItem,
+            onAddLabel,
+            onRemoveLabel,
+            onUpdateList,
+            onAddItem,
+            onUpdateItem,
+            onDeleteItem,
+            editmode
+        } = this.props;
+
+        const listItems = list.items.map(id => items[id]);
+
+        const sortedItems = listItems.sort(function(a, b) {
+            var textA = a.status.toUpperCase();
+            var textB = b.status.toUpperCase();
+            return textA < textB ? -1 : textA > textB ? 1 : 0;
+        });
+    
+        
+        
+    
+        let showRow;
+        const handleShow = () => {
+            showRow = "block";
+            console.log("showRow", showRow)
+        }
+    
+        const handleSaveHide = () => {
+            showRow = 'none';
+            console.log("showRow", showRow)
+        }
+    
+
+        
+        const newItemRow =  <li className="collection-item item-add" >
+                               <form id="addItem" onSubmit={(e)=>{
+                                   e.preventDefault();
+                                    let newItem = {
+                                        id: 0,
+                                        listId: list.id,
+                                        name: this.newItem.value,
+                                        qty: 0,
+                                        price: 0,
+                                        status: 'active'
+                                    };
+                                    onAddItem(newItem);
+                                    this.hideAddItem();
+                                    }}>
+                                    <div className="input-field">
+                                        <input id="newItem" type="text" className="validate"
+                                        ref={input => (this.newItem = input)} />
+                                        <label htmlFor="newItem">New</label>
+                                    </div>
+                                   
+                                </form>
+                            </li>
+    
+        let title = (
             <div>
                 <span className="card-title">{list.title}</span>
                 {list.labels.length > 0
@@ -70,53 +96,63 @@ const ListCard = ({
                     : ''}
             </div>
         );
-    }
 
-    return (
-        <div className="col s12 m4">
-            <div className="card light-grey">
-                        <a class="btn btn-small teal right">
-                            <i class="small material-icons">clear</i>
-                        </a>
-                <div className="card-content ">{title}
-                       
-                </div>
-                <ul className="collection">
-                    {sortedItems.map(item => {
-                        let it;
-                        if (item.status === 'active') {
-                            it = <Item key={item.id} parentId={list.id} item={item} onUpdateItem={onUpdateItem} />;
-                        }
+        return (
+            <div className="col s12 m4 list-card">
+                <div className="card light-grey">
+                            <a className="btn btn-small teal right" onClick={(e)=>{
+                                e.preventDefault();
+                                list.status = 'deleted'
+                                onUpdateList(list)}}>
+                                <i className="small material-icons">clear</i>
+                            </a>
+                    <div className="card-content ">{title}</div>
+                    <ul className="collection" >
+                        {sortedItems.map(item => {
+                            let it;
+                            if (item.status === 'active') {
+                                it = <Item key={item.id} 
+                                parentId={list.id} 
+                                item={item} 
+                                onUpdateItem={onUpdateItem}
+                                onDeleteItem={onDeleteItem} />;
+                            }
+    
+                            if (item.status === 'done') {
+                                it = <DoneItem key={item.id} item={item} />;
+                            }
+    
+                            return it;
+                        })}
 
-                        if (item.status === 'done') {
-                            it = <DoneItem key={item.id} item={item} />;
-                        }
-
-                        return it;
-                    })}
-                </ul>
-                <div className="card-action">
-                    <div className="fixed-action-btn horizontal">
-                        <a className="btn-floating btn-small red">
-                            <i className="material-icons">menu</i>
-                        </a>
-                        <ul>
-                            <li>
-                                <a className="btn-floating red" onClick={()=>onAddItem(list.id, newItem)}>
-                                    <i className="material-icons">add</i>
-                                </a>
-                            </li>
-                            <li>
-                                <a className="btn-floating yellow darken-1" onClick={()=>onAddLabel()}>
-                                    <i className="material-icons">label</i>
-                                </a>
-                            </li>
-                        </ul>
+                        {sortedItems.length == 0 || this.state.newItem ? newItemRow : ''}
+                        
+                    </ul>
+                    <div className="card-action">
+                        <div className="fixed-action-btn horizontal">
+                            <a className="btn-floating btn-small red">
+                                <i className="material-icons">menu</i>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a className="btn-floating red" onClick={()=>this.handleAddNewItem()}>
+                                        <i className="material-icons">add</i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a className="btn-floating yellow darken-1" onClick={()=>onAddLabel()}>
+                                        <i className="material-icons">label</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    );
-};
+        )
+    }
+
+    
+}
 
 export default ListCard;
