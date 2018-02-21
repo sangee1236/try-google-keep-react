@@ -1,7 +1,7 @@
-import {denormalize, normalize } from 'normalizr';
+import { normalize } from 'normalizr';
 import { listSchema, itemSchema } from './schemas';
 
-const baseUrl = 'http://localhost:55543/api';
+const baseUrl = 'http://kuba2-prod-api.azurewebsites.net/api';
 
 
 
@@ -15,9 +15,10 @@ export const retriveLists = lists => ({
     payload: lists
 });
 
-export const addList = list => ({
+export const addList = (id, list) => ({
     type: 'ADD_LIST',
-    payload: list
+    payload: list,
+    id:id
 });
 
 export const updateList = list => ({
@@ -30,9 +31,11 @@ export const deleteList = list => ({
     payload: list
 });
 
-export const addItem = (listId, item) => ({
+export const addItem = (pid,id, item) => ({
     type: 'ADD_ITEM',
-    payload: item
+    payload: item,
+    id:id,
+    pid:pid
 });
 
 export const updateItem = (item) => ({
@@ -123,7 +126,7 @@ export const createList = list => {
 
               response.json().then(function(data) {
                 const normalized = normalize(data, listSchema);
-                dispatch(addList(normalized));
+                dispatch(addList(data.id, normalized));
                 
               });
           })
@@ -147,7 +150,7 @@ export const handleItemUpdatAdd = item => {
   
                 response.json().then(function(data) { 
                   const normalized = normalize(data, itemSchema);                
-                  dispatch(addItem(normalized));
+                  dispatch(addItem(data.listId, data.id, normalized));
                 });
             })
             .catch(function(err) {

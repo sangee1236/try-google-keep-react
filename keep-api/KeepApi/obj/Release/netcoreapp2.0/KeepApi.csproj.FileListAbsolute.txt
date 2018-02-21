@@ -1,0 +1,11 @@
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\bin\Release\netcoreapp2.0\KeepApi.deps.json
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\bin\Release\netcoreapp2.0\KeepApi.runtimeconfig.json
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\bin\Release\netcoreapp2.0\KeepApi.runtimeconfig.dev.json
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\bin\Release\netcoreapp2.0\KeepApi.dll
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\bin\Release\netcoreapp2.0\KeepApi.pdb
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\obj\Release\netcoreapp2.0\KeepApi.csproj.CoreCompileInputs.cache
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\obj\Release\netcoreapp2.0\KeepApi.AssemblyInfoInputs.cache
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\obj\Release\netcoreapp2.0\KeepApi.AssemblyInfo.cs
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\obj\Release\netcoreapp2.0\KeepApi.dll
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\obj\Release\netcoreapp2.0\KeepApi.pdb
+D:\Projects\Sandbox\try-google-keep-react\keep-api\KeepApi\obj\Release\netcoreapp2.0\KeepApi.csprojResolveAssemblyReference.cache

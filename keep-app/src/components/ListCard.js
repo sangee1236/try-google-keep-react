@@ -32,6 +32,13 @@ class ListCard extends React.Component {
             editmode
         } = this.props;
 
+        if(list.items == null){
+            list.items = []
+        }
+        if(list.labels == null){
+            list.labels = []
+        }
+        
         const listItems = list.items.map(id => items[id]);
 
         const sortedItems = listItems.sort(function(a, b) {
@@ -130,21 +137,9 @@ class ListCard extends React.Component {
                     </ul>
                     <div className="card-action">
                         <div className="fixed-action-btn horizontal">
-                            <a className="btn-floating btn-small red">
-                                <i className="material-icons">menu</i>
-                            </a>
-                            <ul>
-                                <li>
-                                    <a className="btn-floating red" onClick={()=>this.handleAddNewItem()}>
+                        <a className="btn-floating btn-small red" onClick={()=>this.handleAddNewItem()}>
                                         <i className="material-icons">add</i>
                                     </a>
-                                </li>
-                                <li>
-                                    <a className="btn-floating yellow darken-1" onClick={()=>onAddLabel()}>
-                                        <i className="material-icons">label</i>
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

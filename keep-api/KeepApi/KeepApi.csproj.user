@@ -10,5 +10,6 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>KeepApi.ViewModels.KeepDbContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <NameOfLastUsedPublishProfile>Kuba2-prod-api - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

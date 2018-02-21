@@ -1,5 +1,3 @@
-import update from 'react-addons-update'; 
-
 const initialState = {
   user:{},
   result:[],
@@ -17,8 +15,12 @@ const lists = (state = initialState, action) => {
 
       case 'ADD_LIST':
         console.log("NewList", action.payload);
+        var payload = action.payload
         // Temp need to implementing       
-        return {...state, lists:{...state.lists,[action.payload.id]:action.payload}};
+        return {...state, 
+          result:[...state.result, action.id], 
+          entities:{...state.entities,
+          lists:{...state.entities.lists, ...payload.entities.lists}}};
 
         case 'UPDATE_LIST':
         case 'DELETE_LIST':
@@ -29,7 +31,13 @@ const lists = (state = initialState, action) => {
           };
 
         case 'ADD_ITEM':
-        return {...state,items:{...state.items,...action.payload}};
+        payload = action.payload
+        return {...state, 
+          entities:{...state.entities, 
+            lists:{...state.entities.lists, ...state.entities.lists[action.pid].items = [...state.entities.lists[action.pid].items, action.id]},
+            items:{...state.entities.items, ...payload.entities.items}
+          }
+        };
 
         case 'UPDATE_ITEM':
         case 'DELETE_ITEM':

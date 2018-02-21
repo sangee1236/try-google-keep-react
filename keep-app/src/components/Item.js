@@ -9,11 +9,11 @@ const Item = ({parentId, item, onUpdateItem, onDeleteItem}) => {
             type="checkbox" 
             className="filled-in" 
             id={item.id} 
-            checked={item.status === "active" ? true: false }
+            checked={item.status === "active" ? false: true }
             ref={input => (this.input = input)}
             onChange={(e)=>{
               e.preventDefault();
-              item.status = e.target.checked ? 'active':'done';
+              item.status = e.target.checked ? 'done':'active';
               onUpdateItem(item)}}/>
             <label htmlFor={item.id}>{item.name}</label>
             <a href="#!" className="secondary-content" 

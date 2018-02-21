@@ -18,10 +18,10 @@ class Dashboard extends Component {
                 <div className="main-content">
                     <div className="section">
                         <div className="row">
-                            <div className="col s12 m2">
+                            {/* <div className="col s12 m2">
                                 <Sidebar />
-                            </div>
-                            <div className="col s12 m10">
+                            </div> */}
+                            <div className="col s12 m12">
                                 <ListCards user={this.props.user} onLoadList={this.props.onLoadList} />
                             </div>
                         </div>
