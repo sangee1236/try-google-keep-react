@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import ListCard from '../components/ListCard';
+import { denormalize, normalize } from 'normalizr';
+import { listSchema, userSchema } from '../actions/schemas';
 import { connect } from 'react-redux';
 import {
     addLabel,
@@ -9,9 +12,10 @@ import {
     handleListUpdate,
     handleItemUpdatAdd,
     handleItemUpdate,
+    deleteItem,
     removeLabel
 } from '../actions/ListActions';
-import * as selector from '../reducers/ListReducers';
+import * as selector from '../reducers/ListReducers'
 
 class ListCards extends Component {
     constructor(props) {
@@ -20,48 +24,53 @@ class ListCards extends Component {
     }
 
     state = {
-        open: false
+        open: false        
     };
-
+    
     handleOpen = () => {
-        this.setState({ open: true });
+    this.setState({open: true});
     };
 
-    handleClose = () => {
-        this.setState({ open: false });
-    };
+    handleClose = () => {       
+        this.setState({open: false});
+    }
+
+  
 
     handleSaveClose = () => {
-        let newList = {
-            id: 0,
-            userId: this.props.user.id,
-            title: this.newTitle.value ? this.newTitle.value : 'New List',
-            status: 'active'
-        };
-        this.props.onAddList(newList);
-        this.setState({ open: false });
+    let newList = {
+        id: 0,
+        userId: this.props.user.id,
+        title: this.newTitle.value ? this.newTitle.value : 'New List',       
+        status: 'active'
+    }
+    this.props.onAddList(newList);
+    this.setState({open: false});
+
     };
 
     render() {
+
         const actions = [
             <FlatButton
-                label="Cancel"
-                primary={true}
-                onClick={this.handleClose}
+              label="Cancel"
+              primary={true}
+              onClick={this.handleClose}
             />,
             <FlatButton
-                label="Submit"
-                primary={true}
-                onClick={this.handleSaveClose}
-            />
-        ];
-
-        const { lists, items } = this.props;
-        const activeList = lists.filter(list => list.status === 'active');
+              label="Submit"
+              primary={true}
+              onClick={this.handleSaveClose}
+            />,
+          ];
+      
+        const {lists, user, items} = this.props;
+        const activeList = lists.filter(list=>list.status == "active"); 
         let disableClass = '';
         if (this.editmode) {
             disableClass = 'disabled';
         }
+        
 
         return (
             <div className="row">
@@ -80,21 +89,18 @@ class ListCards extends Component {
                     />
                 ))}
 
-                <Dialog
+               
+                    <Dialog
                     title="New List"
                     actions={actions}
                     modal={true}
                     open={this.state.open}
-                >
-                    <div className="row">
+                    >
+                   <div className="row">
                         <div className="input-field col s12">
-                            <input
-                                id="listTile"
-                                type="text"
-                                className="validate"
-                                ref={input => (this.newTitle = input)}
-                            />
-                            <label htmlFor="listTile">List Name</label>
+                        <input id="listTile" type="text" className="validate"
+                        ref={input => (this.newTitle = input)} />
+                        <label htmlFor="listTile">List Name</label>
                         </div>
                     </div>
                 </Dialog>
@@ -106,8 +112,7 @@ class ListCards extends Component {
                             'btn-floating btn-large waves-effect waves-light red ' +
                             disableClass
                         }
-                        label="Modal Dialog"
-                        onClick={this.handleOpen}
+                        label="Modal Dialog" onClick={this.handleOpen} 
                     >
                         <i className="material-icons">add</i>
                     </a>
@@ -121,6 +126,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         lists: selector.getAllList(state),
         items: state.entities ? state.entities.items : [],
+        user: state.user
     };
 };
 

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { addLabel, loadLists } from '../actions/ListActions';
-// import Sidebar from '../components/Sidebar';
+import {addLabel, loadLists } from '../actions/ListActions';
+import Sidebar from '../components/Sidebar';
 import ListCards from './ListCards';
-import * as selector from '../reducers/ListReducers';
+import * as selector from '../reducers/ListReducers'
 
-class Dashboard extends Component {
-    constructor(props, context) {
+class Dashboard extends Component { 
+    constructor(props, context){
         super(props);
-    }
+    } 
 
     render() {
         return (
@@ -22,10 +22,7 @@ class Dashboard extends Component {
                                 <Sidebar />
                             </div> */}
                             <div className="col s12 m12">
-                                <ListCards
-                                    user={this.props.user}
-                                    onLoadList={this.props.onLoadList}
-                                />
+                                <ListCards user={this.props.user} onLoadList={this.props.onLoadList} />
                             </div>
                         </div>
                     </div>

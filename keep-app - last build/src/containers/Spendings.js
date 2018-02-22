@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../actions/ListActions';
-// import { Bar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { Doughnut } from 'react-chartjs-2';
 import Header from '../components/Header';
 import * as selector from '../reducers/ListReducers';
@@ -13,26 +13,17 @@ class Spendings extends Component {
     };
 
     populateBar() {
-        let labels = this.props.lists.map(list => {
-            if (list.status === 'active') {
+        
+        let labels = this.props.lists.map(list=> {
+            if(list.status === 'active'){
                 return list.title;
             }
-            return null;
         });
-        labels = labels.filter(list => list != null);
-        let data = this.props.lists.map(list => {
-            if (list.status === 'active') {
-                var length = 0;
-                list.items.forEach(itemId => {
-                    if (this.props.items[itemId].status === 'active') {
-                        length++;
-                    }
-                });
-                return length;
-            }
-            return null;
-        });
-        console.log('lists', labels, data);
+        let data = this.props.lists.map(list=> {
+            if(list.status === 'active'){
+                return list.items.length;
+            }} );
+        console.log("lists",labels, data);
         return {
             labels: labels,
             datasets: [
@@ -46,25 +37,25 @@ class Spendings extends Component {
                     data: data
                 }
             ]
-        };
+        }
     }
 
-    populateDou() {
-        let labels = this.props.lists.map(list => {
-            if (list.status === 'active') {
+    populateDou(){
+        let labels = this.props.lists.map(list=> {
+            if(list.status === 'active'){
                 return list.title;
             }
             return null;
         });
         labels = labels.filter(list => list != null);
-        let data = this.props.lists.map(list => {
-            if (list.status === 'active') {
+        let data = this.props.lists.map(list=> {
+            if(list.status === 'active'){
                 var length = 0;
-                list.items.forEach(itemId => {
-                    if (this.props.items[itemId].status === 'active') {
+                list.items.map(itemId => {
+                    if(this.props.items[itemId].status === 'active'){
                         length++;
                     }
-                });
+                })
                 return length;
             }
             return null;
@@ -80,7 +71,7 @@ class Spendings extends Component {
                     hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
                 }
             ]
-        };
+        }
     }
 
     componentDidMount() {

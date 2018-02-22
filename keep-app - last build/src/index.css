@@ -1,0 +1,46 @@
+.nav-wrapper{
+    padding: 0 10px;
+}
+
+.card-action{
+    height:50px;
+}
+
+.card-action .fixed-action-btn{
+    position: absolute;
+    right: 10px;
+    height:22px;
+}
+
+.card-action .fixed-action-btn ul{
+  right: 35px;  
+}
+
+.card-action .fixed-action-btn ul,
+.card-action .fixed-action-btn ul li{
+    margin: 0 5px 0 0;
+}
+
+.done.muted{    
+    color:#999;
+    text-decoration:line-through;
+}
+
+.list-card .card-content{
+    padding:0 !important;
+}
+
+.list-card .card-title{
+    padding:5px !important;
+    margin-bottom: 0;
+}
+.list-card .collection{
+    height: 300px;
+    overflow-y: auto;
+    margin-top:0px;
+    
+}
+
+.item-add{
+    padding: 0;
+}
